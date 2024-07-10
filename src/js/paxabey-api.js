@@ -17,3 +17,6 @@ export async function fetchImage() {
   console.log(response.data);
   return response.data;
 }
+
+
+
