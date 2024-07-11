@@ -1,5 +1,22 @@
 import iziToast from 'izitoast';
 import 'izitoast/dist/css/iziToast.min.css';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
+
+export const refs = {
+  searchForm: document.querySelector('.js-search-form'),
+  gallery: document.querySelector('.gallery'),
+  loader: document.querySelector('.js-loader'),
+  loadmore: document.querySelector('.loadmore-button'),
+};
+
+const galleryBigImage = new SimpleLightbox('.gallery a', {
+  captionDelay: 250,
+  overlayOpacity: 0.8,
+  scrollZoom: false,
+});
+
+galleryBigImage.on('show.simplelightbox', function () {});
 
 iziToast.settings({
   timeout: 2500,
@@ -12,14 +29,7 @@ iziToast.settings({
   backgroundColor: 'rgba(255, 182, 66, 0.8)',
 });
 
-export const refs = {
-  searchForm: document.querySelector('.js-search-form'),
-  gallery: document.querySelector('.gallery'),
-  loader: document.querySelector('.js-loader'),
-  loadmore: document.querySelector('.loadmore-button'),
-};
-
-export function renderCard(imageData) {
+function renderCard(imageData) {
   return imageData
     .map(
       el =>
@@ -70,10 +80,29 @@ export function handlerError(error) {
       });
       break;
     default:
+      console.log(error);
       iziToast.error({
         title: 'Error',
         message: 'Щось пішло не так. Ми працюемо над вирішенням питання!',
       });
       break;
   }
+}
+
+export function scrollCard() {
+  const heightImageCard = document
+    .querySelector('.card')
+    .getBoundingClientRect().height;
+
+  window.scrollBy({
+    left: 0,
+    top: Math.ceil(heightImageCard * 2),
+    behavior: 'smooth',
+  });
+}
+
+export function addImage(image) {
+  refs.loader.classList.remove('loader');
+  refs.gallery.insertAdjacentHTML('beforeend', renderCard(image));
+  galleryBigImage.refresh();
 }

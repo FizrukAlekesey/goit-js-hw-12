@@ -11,7 +11,7 @@
 }
 
 main {
-  margin-top: 65px;
+  margin-top: 60px;
 }
 
 input:focus,
@@ -38,7 +38,7 @@ button:hover {
   flex-wrap: wrap;
   row-gap: 24px;
   column-gap: 24px;
-  padding: 24px 0;
+  margin-bottom: 24px;
   background-color: #fff;
   justify-content: center;
 }
@@ -147,6 +147,7 @@ button:hover {
 }
 
 .loadmore-button {
-  display: block;
+  --lmb-dispay: none;
+  display: var(--lmb-dispay);
   margin: 0 auto;
 }
